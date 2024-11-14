@@ -1,0 +1,27 @@
+/* custom-virtual-scroll.component.css */
+.scroll-container {
+  position: relative;
+  height: 400px; /* Set the viewport height */
+  overflow-y: auto;
+  border: 1px solid #ccc;
+}
+
+.spacer {
+  /* The height is set dynamically in the template */
+}
+
+.items {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.item {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #eee;
+}

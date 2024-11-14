@@ -1,0 +1,55 @@
+<div
+  class="rounded-md drop-shadow-lg bg-white absolute left-0 right-0 mt-3 p-3 overflow-auto"
+  [style.height.px]="viewportHeight"
+  (scroll)="onScroll($event)"
+>
+  <ul class="relative" [style.height.px]="totalContentHeight">
+    <div
+      class="absolute top-0 left-0 right-0"
+      [style.transform]="getTransform()"
+    >
+      @for(item of displayedItems(); track item.pageid; let first = $first; let
+      last = $last; let index = $index){
+      <div class="h-[120px]" [id]="item.pageid">
+        <li
+          [id]="item.pageid"
+          role="listitem"
+          [tabIndex]="index"
+          (click)="typeaheadItemSelect(item)"
+          class="flex flex-row gap-4 justify-start items-center cursor-pointer px-4 py-2 rounded-lg hover:bg-gray-50"
+          [ngClass]="{
+            'border-b': !last,
+            'bg-indigo-50 hover:bg-indigo-100':
+              selectedTypeahead()?.pageid === item.pageid
+          }"
+        >
+          <div class="col-12">
+            <h3 class="text-gray-900 font-medium text-md mb-2">
+              <a
+                [title]="item.title"
+                role="link"
+                class="hover:text-indigo-600 hover:underline transition-all"
+                [href]="'https://en.wikipedia.org/?curid=' + item.pageid"
+                target="_blank"
+                [innerHTML]="
+                  (item.title.length > 50
+                    ? (item.title | slice : 0 : 50).trim() + '...'
+                    : item.title
+                  ) | highlight : searchTerm : 'bg-amber-100 font-bold'
+                "
+              ></a>
+            </h3>
+            <div
+              [innerHTML]="item.snippet | highlight : searchTerm : 'bg-amber-100 font-bold'"
+              class="text-gray-600 mt-1 font-regular text-sm"
+            ></div>
+          </div>
+        </li>
+      </div>
+      }
+      <!-- Sentinel element to detect when the user reaches the bottom -->
+      <div class="sentinel h-1"></div>
+    </div>
+  </ul>
+</div>
+<!--<div class="loading-more" *ngIf="isBatchLoading()">Loading more...</div>-->
