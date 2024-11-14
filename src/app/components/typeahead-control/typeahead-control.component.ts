@@ -12,16 +12,18 @@ import { CommonModule } from '@angular/common'
 import {
   debounceTime,
   distinctUntilChanged,
-  filter, Observable,
+  filter,
+  Observable,
   of,
   Subject,
   takeUntil,
-  tap
+  tap,
 } from 'rxjs'
 import { map, switchMap } from 'rxjs/operators'
 import { TypeaheadStateFacade } from '../../+state/typeahead-state.facade'
 import { SearchResult } from '../../models/typeahead.model'
 import { TypeaheadSuggestionsListComponent } from '../typeahead-suggestions-list/typeahead-suggestions-list.component'
+import { QueryPageInfo } from '../../+state/typeahead-state.models'
 
 /**
  * TypeaheadControlComponent provides a typeahead-control search functionality with suggestions.
@@ -29,14 +31,13 @@ import { TypeaheadSuggestionsListComponent } from '../typeahead-suggestions-list
 @Component({
   selector: 'app-typeahead-control',
   standalone: true,
-  imports: [
-    CommonModule,
-    TypeaheadSuggestionsListComponent,
-  ],
+  imports: [CommonModule, TypeaheadSuggestionsListComponent],
   templateUrl: './typeahead-control.component.html',
   styleUrl: './typeahead-control.component.scss',
 })
-export class TypeaheadControlComponent implements OnInit, AfterViewInit, OnDestroy {
+export class TypeaheadControlComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   /** Manages subscriptions when the component is destroyed */
   private readonly toDestroy$ = new Subject<void>()
 
@@ -52,12 +53,10 @@ export class TypeaheadControlComponent implements OnInit, AfterViewInit, OnDestr
   /**
    * Emits search query strings from the input field.
    */
-  public query$ = new Subject<string>()
+  private query$ = new Subject<string>()
 
-  /**
-   * Current page number for pagination.
-   */
-  public readonly page = signal<number>(1)
+  /** Query page information for pagination. */
+  private readonly queryPageInfo = signal<QueryPageInfo>(undefined)
 
   /**
    * Holds the list of search suggestions.
@@ -80,6 +79,7 @@ export class TypeaheadControlComponent implements OnInit, AfterViewInit, OnDestr
   public readonly isSearchLoading = signal<boolean>(undefined)
 
   public ngOnInit(): void {
+    this.#selectQueryPageInfo()
     this.#selectIsSearchLoading()
     this.#selectSuggestions()
   }
@@ -115,7 +115,19 @@ export class TypeaheadControlComponent implements OnInit, AfterViewInit, OnDestr
    * Loads the next page of suggestions.
    */
   public loadNextBatch(): void {
-    this.appFacade.fetchNextPage(this.searchTerm().trim(), this.page() + 1)
+    const term = this.searchTerm().trim()
+    // Grab the current page and total pages for the current search term
+    const { currentPage, totalPages } = this.queryPageInfo()[term] || {}
+    const current = currentPage || 1
+    const total = totalPages || Infinity
+
+    if (current < total) {
+      const nextPage = current + 1
+      this.appFacade.fetchNextPage(term, nextPage)
+    } else {
+      // TODO: Implement a toast or other UI feedback for no more pages
+      console.warn('No more pages to load')
+    }
   }
 
   /**
@@ -187,6 +199,17 @@ export class TypeaheadControlComponent implements OnInit, AfterViewInit, OnDestr
       .pipe(takeUntil(this.toDestroy$))
       .subscribe((isLoading) => {
         this.isSearchLoading.set(isLoading)
+      })
+  }
+
+  #selectQueryPageInfo(): void {
+    this.appFacade.selectQueryPageInfo$
+      .pipe(
+        filter((qi) => typeof qi !== 'undefined'),
+        takeUntil(this.toDestroy$)
+      )
+      .subscribe((pageInfo) => {
+        this.queryPageInfo.set(pageInfo)
       })
   }
 }

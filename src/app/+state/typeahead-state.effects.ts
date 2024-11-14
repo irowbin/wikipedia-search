@@ -18,11 +18,12 @@ export class TypeaheadEffects {
       fetch({
         run: (action) =>
           this.apiService.search(action.query, action.page).pipe(
-            map((response) =>
+            map(({ results, totalPages }) =>
               TypeaheadActions.searchSuccess({
                 query: action.query,
-                results: response,
+                results,
                 page: action.page,
+                totalPages,
               })
             ),
             catchError((error) => of(TypeaheadActions.searchFailure({ error })))
@@ -34,17 +35,19 @@ export class TypeaheadEffects {
       })
     )
   )
+
   public fetchNextPage$ = createEffect(() =>
     this.actions$.pipe(
       ofType(TypeaheadActions.fetchNextPage),
       fetch({
         run: (action) =>
           this.apiService.search(action.query, action.page).pipe(
-            map((response) =>
+            map(({ results, totalPages }) =>
               TypeaheadActions.fetchNextPageSuccess({
                 query: action.query,
-                results: response,
+                results,
                 page: action.page,
+                totalPages,
               })
             ),
             catchError((error) =>

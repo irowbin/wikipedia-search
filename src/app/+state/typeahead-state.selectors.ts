@@ -30,3 +30,8 @@ export const selectIsLoadingNextPage = createSelector(
   selectTypeaheadState,
   (state: TypeaheadState) => state.isNextPageLoading
 )
+
+export const selectQueryPageInfo = createSelector(
+  selectTypeaheadState,
+  (state: TypeaheadState) => state.queryPageInfo
+)

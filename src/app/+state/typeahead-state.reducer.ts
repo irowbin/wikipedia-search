@@ -1,29 +1,31 @@
-import { createReducer, on, Action } from '@ngrx/store'
+import { Action, createReducer, on } from '@ngrx/store'
 import * as TypeaheadActions from './typeahead-state.actions'
 import { resetStateProperty } from '../utils/state-reset-utility'
 import { TypeaheadState } from './typeahead-state.models'
 import { SearchResult } from '../models/typeahead.model'
 
+/** Name of the feature */
 export const TYPEAHEAD_STATE_FEATURE_KEY = 'typeaheadState'
 
+/** Initial state for the typeahead state */
 export const initialState: TypeaheadState = {
   queries: {},
+  queryPageInfo: {},
   isSearchLoading: undefined,
   error: undefined,
   selectedTypeahead: undefined,
   isNextPageLoading: undefined,
 }
 
+/** Local utility function to add serial numbers to search results */
 function getResultsWithSN(
-  state: TypeaheadState,
-  query: string,
-  results: SearchResult[]
+  existingResults: SearchResult[],
+  newResults: SearchResult[]
 ) {
-  const currentResults = state.queries[query] || []
-  const sn = currentResults.length
-    ? currentResults[currentResults.length - 1].sn + 1
+  const snStart = existingResults.length
+    ? existingResults[existingResults.length - 1].sn + 1
     : 1
-  return results.map((result, index) => ({ ...result, sn: sn + index }))
+  return newResults.map((result, index) => ({ ...result, sn: snStart + index }))
 }
 
 const reducer = createReducer(
@@ -36,12 +38,16 @@ const reducer = createReducer(
     isSearchLoading: true,
     error: null,
   })),
-  on(TypeaheadActions.searchSuccess, (state, { query, results }) => ({
+  on(TypeaheadActions.searchSuccess, (state, { query, results, page, totalPages }) => ({
     ...state,
     isSearchLoading: false,
     queries: {
       ...state.queries,
-      [query]: getResultsWithSN(state, query, results),
+      [query]: getResultsWithSN([], results),
+    },
+    queryPageInfo: {
+      ...state.queryPageInfo,
+      [query]: { currentPage: page, totalPages },
     },
   })),
   on(TypeaheadActions.searchFailure, (state, { error }) => ({
@@ -61,12 +67,19 @@ const reducer = createReducer(
     ...state,
     isNextPageLoading: true,
   })),
-  on(TypeaheadActions.fetchNextPageSuccess, (state, { query, results }) => ({
+  on(TypeaheadActions.fetchNextPageSuccess, (state, { query, results, page, totalPages }) => ({
     ...state,
     isNextPageLoading: false,
     queries: {
       ...state.queries,
-      [query]: [...state.queries[query], ...getResultsWithSN(state, query, results)],
+      [query]: [
+        ...(state.queries[query] || []),
+        ...getResultsWithSN(state.queries[query] || [], results),
+      ],
+    },
+    queryPageInfo: {
+      ...state.queryPageInfo,
+      [query]: { currentPage: page, totalPages },
     },
   })),
   on(TypeaheadActions.fetchNextPageFailure, (state, { error }) => ({

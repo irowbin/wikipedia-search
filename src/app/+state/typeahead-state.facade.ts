@@ -9,6 +9,10 @@ import { TypeaheadStateKeys } from './typeahead-state.models'
 export class TypeaheadStateFacade {
   private readonly store = inject(Store)
 
+  public readonly selectQueryPageInfo$ = this.store.select(
+    TypeaheadSelectors.selectQueryPageInfo
+  )
+
   public readonly selectQueries$ = this.store.select(
     TypeaheadSelectors.selectQueries
   )

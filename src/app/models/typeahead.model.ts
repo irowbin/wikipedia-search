@@ -1,3 +1,8 @@
+export interface QueryState {
+  results: SearchResult[]
+  currentPage: number
+  totalPages?: number
+}
 export interface SearchResult {
   sn: number
   title: string

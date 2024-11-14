@@ -19,7 +19,7 @@ export class ApiService {
     query: string,
     page = 1,
     pageSize = 100
-  ): Observable<SearchResult[] | null> {
+  ): Observable<{ results: SearchResult[]; totalPages?: number }> {
     const offset = (page - 1) * pageSize
 
     const params = new HttpParams()
@@ -36,16 +36,18 @@ export class ApiService {
       .pipe(
         map((response) => {
           if (response.query && response.query.search) {
-            // Map the search results to the SearchResult interface
-            return response.query.search
+            const results = response.query.search
+            const totalHits = response.query.searchinfo?.totalhits || 0
+            const totalPages = Math.ceil(totalHits / pageSize)
+            return { results, totalPages }
           } else {
             console.error('Unexpected API response:', response)
-            return null
+            return { results: [], totalPages: 0 }
           }
         }),
         catchError((error) => {
           console.error('Wikipedia API Error:', error)
-          return of(null)
+          return of({ results: [], totalPages: 0 })
         })
       )
   }
