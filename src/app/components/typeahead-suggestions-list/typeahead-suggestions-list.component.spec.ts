@@ -242,7 +242,7 @@ describe('TypeaheadSuggestionsListComponent', () => {
     const longTitle = 'This is a very long title that exceeds forty characters'
 
     // WHEN getTruncatedTitle is called
-    const truncatedTitle = component.getTruncatedTitle(longTitle)
+    const truncatedTitle = component.getTruncatedTitle(longTitle, 40)
 
     // THEN it should be truncated with ellipsis
     expect(truncatedTitle).toBe(longTitle.slice(0, 40) + '...')
@@ -252,7 +252,7 @@ describe('TypeaheadSuggestionsListComponent', () => {
     const shortTitle = 'Short title'
 
     // WHEN getTruncatedTitle is called
-    const truncatedTitle = component.getTruncatedTitle(shortTitle)
+    const truncatedTitle = component.getTruncatedTitle(shortTitle, 40)
 
     // THEN it should return the original title
     expect(truncatedTitle).toBe(shortTitle)
@@ -262,7 +262,7 @@ describe('TypeaheadSuggestionsListComponent', () => {
     const disconnectSpy = jest.fn()
     component['observer'] = {
       disconnect: disconnectSpy,
-    } as any
+    } as never
 
     const toDestroyNextSpy = jest.spyOn(component.toDestroy$, 'next')
     const toDestroyCompleteSpy = jest.spyOn(component.toDestroy$, 'complete')
