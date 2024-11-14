@@ -15,7 +15,7 @@ import {
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { SanitizePipe } from '@/pipes/dom-sanitizer.pipe'
-import { filter, Subject, takeUntil } from 'rxjs'
+import { debounceTime, filter, fromEvent, Subject, takeUntil } from 'rxjs'
 import { SearchResult } from '@/models/typeahead.model'
 import { TypeaheadStateFacade } from '@/+state/typeahead-state.facade'
 import { HighlightPipe } from '@/pipes/highlight.pipe'
@@ -88,7 +88,10 @@ export class TypeaheadSuggestionsListComponent
   private observer: IntersectionObserver
 
   /** Signal indicating whether the next batch of items is loading */
-  public isBatchLoading = signal(false)
+  public readonly isBatchLoading = signal(false)
+
+  /** Signal indicating whether the screen is small */
+  public readonly isSmallScreen = signal(false)
 
   /**
    * Creates an instance of TypeaheadSuggestionsListComponent.
@@ -114,6 +117,7 @@ export class TypeaheadSuggestionsListComponent
   }
 
   public ngAfterViewInit(): void {
+    this.#detectScreenSize()
     this.#initIntersectionObserver()
   }
 
@@ -149,11 +153,12 @@ export class TypeaheadSuggestionsListComponent
   /**
    * Truncates the title of a search result to a maximum of 40 characters.
    * @param {string} title The title to truncate
+   * @param {number} len - The maximum length of the title
    * @returns {string} The truncated title
    */
-  public getTruncatedTitle(title: string): string {
+  public getTruncatedTitle(title: string, len: number): string {
     title = title.trim()
-    return title.length > 40 ? title.slice(0, 40) + '...' : title
+    return title.length > len ? title.slice(0, len) + '...' : title
   }
 
   /**
@@ -262,13 +267,15 @@ export class TypeaheadSuggestionsListComponent
       threshold: 0.1,
     }
 
-    if (sentinel) {
-      this.observer = new IntersectionObserver(
-        this.#onIntersection.bind(this),
-        options
-      )
-      this.observer.observe(sentinel)
+    if (!sentinel) {
+      return
     }
+
+    this.observer = new IntersectionObserver(
+      this.#onIntersection.bind(this),
+      options
+    )
+    this.observer.observe(sentinel)
   }
 
   /**
@@ -305,6 +312,14 @@ export class TypeaheadSuggestionsListComponent
       )
       .subscribe((isLoading) => {
         this.isBatchLoading.set(isLoading)
+      })
+  }
+
+  #detectScreenSize(): void {
+    fromEvent(window, 'resize')
+      .pipe(debounceTime(100))
+      .subscribe(() => {
+        this.isSmallScreen.set(window.innerWidth < 768)
       })
   }
 }

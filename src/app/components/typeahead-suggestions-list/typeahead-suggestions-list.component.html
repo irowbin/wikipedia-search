@@ -34,7 +34,7 @@
                 [href]="'https://en.wikipedia.org/?curid=' + item.pageid"
                 target="_blank"
                 [innerHTML]="
-                  getTruncatedTitle(item.title)
+                  getTruncatedTitle(item.title, 40)
                     | highlight : searchTerm : 'bg-amber-100'
                 "
               ></a>
@@ -43,8 +43,15 @@
               [innerHTML]="
                 item.snippet | highlight : searchTerm : 'bg-amber-100'
               "
-              class="text-gray-600 mt-1 font-regular text-sm"
-            ></div>
+              class="text-gray-600 mt-1 font-regular text-sm overflow-hidden relative suggestion-snippet"
+              [ngStyle]="{
+                height: itemHeight - 45 + 'px'
+              }"
+            >
+              <div
+                class="absolute bottom-0 right-0 bg-gradient-to-l from-white to-transparent w-8 h-4"
+              ></div>
+            </div>
           </div>
         </li>
       </div>
