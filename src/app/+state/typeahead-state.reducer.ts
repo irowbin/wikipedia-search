@@ -2,6 +2,7 @@ import { createReducer, on, Action } from '@ngrx/store'
 import * as TypeaheadActions from './typeahead-state.actions'
 import { resetStateProperty } from '../utils/state-reset-utility'
 import { TypeaheadState } from './typeahead-state.models'
+import { SearchResult } from '../models/typeahead.model'
 
 export const TYPEAHEAD_STATE_FEATURE_KEY = 'typeaheadState'
 
@@ -11,6 +12,18 @@ export const initialState: TypeaheadState = {
   error: undefined,
   selectedTypeahead: undefined,
   isNextPageLoading: undefined,
+}
+
+function getResultsWithSN(
+  state: TypeaheadState,
+  query: string,
+  results: SearchResult[]
+) {
+  const currentResults = state.queries[query] || []
+  const sn = currentResults.length
+    ? currentResults[currentResults.length - 1].sn + 1
+    : 1
+  return results.map((result, index) => ({ ...result, sn: sn + index }))
 }
 
 const reducer = createReducer(
@@ -28,7 +41,7 @@ const reducer = createReducer(
     isSearchLoading: false,
     queries: {
       ...state.queries,
-      [query]: results,
+      [query]: getResultsWithSN(state, query, results),
     },
   })),
   on(TypeaheadActions.searchFailure, (state, { error }) => ({
@@ -53,7 +66,7 @@ const reducer = createReducer(
     isNextPageLoading: false,
     queries: {
       ...state.queries,
-      [query]: [...state.queries[query], ...results],
+      [query]: [...state.queries[query], ...getResultsWithSN(state, query, results)],
     },
   })),
   on(TypeaheadActions.fetchNextPageFailure, (state, { error }) => ({
