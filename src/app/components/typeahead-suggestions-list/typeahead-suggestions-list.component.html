@@ -4,10 +4,10 @@
   [style.height.px]="viewportHeight"
   (scroll)="onScroll($event)"
 >
-  <ul class="relative" [style.height.px]="totalContentHeight">
+  <ul class="relative" [ngStyle]="{ 'height.px': totalContentHeight }">
     <div
       class="absolute top-0 left-0 right-0"
-      [style.transform]="getTransform()"
+      [ngStyle]="{ transform: getTransform() }"
     >
       @for(item of displayedItems(); track item.pageid; let first = $first; let
       last = $last; let index = $index;){
@@ -59,9 +59,15 @@
   >
     <div class="flex items-center gap-2">
       <div class="flex space-x-1">
-        <div class="w-2 h-2 rounded-full bg-indigo-600 animate-[bounce_1s_ease-in-out_infinite]"></div>
-        <div class="w-2 h-2 rounded-full bg-indigo-600 animate-[bounce_1s_ease-in-out_0.2s_infinite]"></div>
-        <div class="w-2 h-2 rounded-full bg-indigo-600 animate-[bounce_1s_ease-in-out_0.4s_infinite]"></div>
+        <div
+          class="w-2 h-2 rounded-full bg-indigo-600 animate-[bounce_1s_ease-in-out_infinite]"
+        ></div>
+        <div
+          class="w-2 h-2 rounded-full bg-indigo-600 animate-[bounce_1s_ease-in-out_0.2s_infinite]"
+        ></div>
+        <div
+          class="w-2 h-2 rounded-full bg-indigo-600 animate-[bounce_1s_ease-in-out_0.4s_infinite]"
+        ></div>
       </div>
       <span class="text-sm font-medium">Loading more results...</span>
     </div>
