@@ -5,7 +5,7 @@ import { catchError, map } from 'rxjs/operators'
 import {
   SearchResult,
   WikipediaSearchResponse,
-} from '../models/typeahead.model'
+} from '@/models/typeahead.model'
 
 @Injectable({
   providedIn: 'root',

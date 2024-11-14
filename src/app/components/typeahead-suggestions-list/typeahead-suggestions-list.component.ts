@@ -35,11 +35,11 @@ export class TypeaheadSuggestionsListComponent
 
   /** Reference to the scrollable container element */
   @ViewChild('scrollerContainer', { static: true })
-  private scrollerContainer: ElementRef<HTMLDivElement>
+  public scrollerContainer: ElementRef<HTMLDivElement>
 
   /** Reference to the sentinel element used for infinite scrolling */
   @ViewChild('sentinel')
-  private sentinel: ElementRef<HTMLDivElement>
+  public sentinel: ElementRef<HTMLDivElement>
 
   /** All search results including those loaded in batches */
   @Input()
@@ -94,7 +94,7 @@ export class TypeaheadSuggestionsListComponent
    * Creates an instance of TypeaheadSuggestionsListComponent.
    * @param elRef Reference to the component's element
    */
-  constructor(private elRef: ElementRef) {}
+  constructor(public elRef: ElementRef) {}
 
   /**
    * Updates the total content height and recalculates the visible items based on the current scroll position.
