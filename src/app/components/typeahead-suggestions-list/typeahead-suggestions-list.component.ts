@@ -139,6 +139,50 @@ export class TypeaheadSuggestionsListComponent
   }
 
   /**
+   * Computes the CSS transform property to position the visible items correctly.
+   * @returns  {string} The transform string to translate the items vertically
+   */
+  public getTransform(): string {
+    return `translateY(${this.startIndex * this.itemHeight}px)`
+  }
+
+  /**
+   * Truncates the title of a search result to a maximum of 40 characters.
+   * @param {string} title The title to truncate
+   * @returns {string} The truncated title
+   */
+  public getTruncatedTitle(title: string): string {
+    title = title.trim()
+    return title.length > 40 ? title.slice(0, 40) + '...' : title
+  }
+
+  /**
+   * Host listener for document click events to detect clicks outside the component.
+   * Emits the hide event if the click is outside the suggestion list and not on an input element.
+   * @param {MouseEvent} event The mouse click event
+   * @returns {void}
+   */
+  @HostListener('document:click', ['$event'])
+  public onClick(event: MouseEvent): void {
+    // When a user clicks outside the suggestion list, or it is not an input element, hide the list
+    if (
+      !this.elRef.nativeElement.contains(event.target) &&
+      event.target['tagName'] !== 'INPUT'
+    ) {
+      this.hide.emit()
+    }
+  }
+
+  /**
+   * Handles the selection of a typeahead-control item.
+   * Parses the snippet HTML to plain text to prevent XSS attacks and stores the selected item.
+   * @param {SearchResult} item The selected search result item
+   */
+  public typeaheadItemSelect(item: SearchResult): void {
+    this.#parseAndStoreSelectedItem(item)
+  }
+
+  /**
    * Calculates and sets the total content height based on the number of items and item height.
    * @returns {void}
    */
@@ -178,33 +222,6 @@ export class TypeaheadSuggestionsListComponent
 
     // Update the displayed items signal
     this.displayedItems.set(this.items.slice(this.startIndex, this.endIndex))
-  }
-
-  /**
-   * Computes the CSS transform property to position the visible items correctly.
-   * @returns  {string} The transform string to translate the items vertically
-   */
-  public getTransform(): string {
-    return `translateY(${this.startIndex * this.itemHeight}px)`
-  }
-
-  /**
-   * Truncates the title of a search result to a maximum of 40 characters.
-   * @param {string} title The title to truncate
-   * @returns {string} The truncated title
-   */
-  public getTruncatedTitle(title: string): string {
-    title = title.trim()
-    return title.length > 40 ? title.slice(0, 40) + '...' : title
-  }
-
-  /**
-   * Handles the selection of a typeahead-control item.
-   * Parses the snippet HTML to plain text to prevent XSS attacks and stores the selected item.
-   * @param {SearchResult} item The selected search result item
-   */
-  public typeaheadItemSelect(item: SearchResult): void {
-    this.#parseAndStoreSelectedItem(item)
   }
 
   /**
@@ -292,22 +309,5 @@ export class TypeaheadSuggestionsListComponent
       .subscribe((isLoading) => {
         this.isBatchLoading.set(isLoading)
       })
-  }
-
-  /**
-   * Host listener for document click events to detect clicks outside the component.
-   * Emits the hide event if the click is outside the suggestion list and not on an input element.
-   * @param {MouseEvent} event The mouse click event
-   * @returns {void}
-   */
-  @HostListener('document:click', ['$event'])
-  public onClick(event: MouseEvent): void {
-    // When a user clicks outside the suggestion list, or it is not an input element, hide the list
-    if (
-      !this.elRef.nativeElement.contains(event.target) &&
-      event.target['tagName'] !== 'INPUT'
-    ) {
-      this.hide.emit()
-    }
   }
 }
