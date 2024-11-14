@@ -243,7 +243,7 @@ describe('ApiService', () => {
       return (
         url === API_URL &&
         request.params.get('srsearch') === query &&
-        request.params.get('srlimit') === '100' &&
+        request.params.get('srlimit') === '25' &&
         request.params.get('sroffset') === '0'
       )
     })
