@@ -1,5 +1,5 @@
 @layer {
   :host {
-    @apply flex flex-col self-start place-self-start grow max-w-screen-xl mx-auto;
+    @apply flex flex-col self-start place-self-start grow mx-auto relative;
   }
 }

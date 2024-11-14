@@ -1,5 +1,15 @@
-<h2 class="text-2xl font-bold text-gray-800 mb-4">Selected (JSON Content)</h2>
+@if(selectedTypeahead()) {
+<div class="text-lg font-medium sm:text-xl relative flex flex-col mb-3">
+  Selected Article
+</div>
 <pre
   class="bg-gray-900 rounded-lg p-6 overflow-x-auto text-green-400 font-mono text-sm leading-relaxed shadow-lg"
   >{{ selectedTypeahead() | json }}
 </pre>
+} @else {
+<div role="alert" class="rounded border-s-4 border-indigo-500 bg-indigo-50 p-4">
+  <p class="text-indigo-600">
+    No article selected. Search and select an article to view its content.
+  </p>
+</div>
+}
