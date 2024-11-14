@@ -1,6 +1,6 @@
 <div
   #scrollerContainer
-  class="rounded-md drop-shadow-lg bg-white absolute left-0 right-0 mt-3 p-3 overflow-auto"
+  class="rounded-md drop-shadow-lg bg-white absolute left-0 right-0 mt-3 p-3 overflow-auto z-50"
   [style.height.px]="viewportHeight"
   (scroll)="onScroll($event)"
 >
@@ -54,9 +54,16 @@
     </div>
   </ul>
   <div
-    class="flex grow h-3 text-indigo-700 px-3 mb-3 relative"
+    class="flex items-center justify-center gap-2 h-12 text-indigo-700 px-3 mb-3 relative"
     *ngIf="isBatchLoading()"
   >
-    Loading more...
+    <div class="flex items-center gap-2">
+      <div class="flex space-x-1">
+        <div class="w-2 h-2 rounded-full bg-indigo-600 animate-[bounce_1s_ease-in-out_infinite]"></div>
+        <div class="w-2 h-2 rounded-full bg-indigo-600 animate-[bounce_1s_ease-in-out_0.2s_infinite]"></div>
+        <div class="w-2 h-2 rounded-full bg-indigo-600 animate-[bounce_1s_ease-in-out_0.4s_infinite]"></div>
+      </div>
+      <span class="text-sm font-medium">Loading more results...</span>
+    </div>
   </div>
 </div>

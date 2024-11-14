@@ -241,11 +241,9 @@ export class TypeaheadSuggestionsListComponent
 
   /**
    * Loads the next batch of items by emitting the loadMore event.
-   * Sets the isBatchLoading signal to true.
    * @returns {void}
    */
   #loadNextBatch(): void {
-    this.isBatchLoading.set(true)
     this.loadMore.emit()
   }
 
@@ -264,12 +262,11 @@ export class TypeaheadSuggestionsListComponent
       threshold: 0.1,
     }
 
-    this.observer = new IntersectionObserver(
-      this.#onIntersection.bind(this),
-      options
-    )
-
     if (sentinel) {
+      this.observer = new IntersectionObserver(
+        this.#onIntersection.bind(this),
+        options
+      )
       this.observer.observe(sentinel)
     }
   }
