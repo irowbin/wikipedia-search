@@ -1,12 +1,14 @@
 <div
   class="rounded-xl bg-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8 self-center h-[47.30rem]"
 >
-  <div class="flex items-start sm:gap-8">
+  <div class="flex items-start flex-wrap sm:gap-8">
     <div>
       <h3
-        class="text-lg font-medium sm:text-xl relative flex items-center gap-2"
+        class="text-lg font-medium sm:text-xl relative flex flex-col items-start gap-1"
       >
-        <!-- TODO: SVG can be moved to a file and load lazily to reduce bundle size -->
+
+        <span class="flex flex-row gap-2 items-center">
+          <!-- TODO: SVG can be moved to a file and load lazily to reduce bundle size -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6 text-indigo-600"
@@ -20,8 +22,11 @@
             stroke-width="2"
             d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
           />
-        </svg>
-        Search Guide
+        </svg> Quick Start Guide</span>
+
+        <div class="text-indigo-700">
+          <small> Search Steps</small>
+        </div>
       </h3>
 
       <div class="mt-6 space-y-6">
