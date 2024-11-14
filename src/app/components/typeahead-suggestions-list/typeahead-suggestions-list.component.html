@@ -35,13 +35,13 @@
                 target="_blank"
                 [innerHTML]="
                   getTruncatedTitle(item.title)
-                    | highlight : searchTerm : 'bg-amber-100 font-bold'
+                    | highlight : searchTerm : 'bg-amber-100'
                 "
               ></a>
             </h3>
             <div
               [innerHTML]="
-                item.snippet | highlight : searchTerm : 'bg-amber-100 font-bold'
+                item.snippet | highlight : searchTerm : 'bg-amber-100'
               "
               class="text-gray-600 mt-1 font-regular text-sm"
             ></div>
