@@ -18,7 +18,7 @@ export class ApiService {
   public search(
     query: string,
     page = 1,
-    pageSize = 100
+    pageSize = 25
   ): Observable<{ results: SearchResult[]; totalPages?: number }> {
     const offset = (page - 1) * pageSize
 
