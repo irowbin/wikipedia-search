@@ -1,8 +1,24 @@
-<div class="rounded-xl bg-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8">
+<div
+  class="rounded-xl bg-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8 grow"
+  #container
+>
   <div class="flex items-start sm:gap-8">
-    <div class="relative">
+    <div class="relative grow">
       <div class="text-lg font-medium sm:text-xl relative flex flex-col">
-        Wikipedia Search
+        <div class="flex flex-row gap-2">
+          <!-- TODO: SVG can be moved to a file and load lazily to reduce bundle size -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 rounded-full border-indigo-600 border-2 p-0.5"
+            fill="#4f46e5"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M22.040 7.6h-3c-0.48 0-0.84 0.36-0.84 0.84s0.36 0.84 0.84 0.84h0.48l-4.76 12.080-2.4-6.080 2.36-6h0.72c0.48 0 0.84-0.36 0.84-0.84s-0.36-0.84-0.84-0.84h-3.040c-0.48 0-0.84 0.36-0.84 0.84s0.36 0.84 0.84 0.84h0.48l-1.48 3.72-1.4-3.72h0.48c0.48 0 0.84-0.36 0.84-0.84s-0.36-0.84-0.84-0.84h-3.040c-0.48 0-0.84 0.36-0.84 0.84s0.36 0.84 0.84 0.84h0.72l2.36 6-2.4 6.080-4.76-12.080h0.48c0.48 0 0.84-0.36 0.84-0.84s-0.36-0.84-0.84-0.84h-3c-0.48 0-0.84 0.36-0.84 0.84s0.36 0.84 0.84 0.84h0.72l5.8 14.68c0.32 0.6 1.2 0.6 1.52 0v0l2.52-6.4 2.52 6.4c0.32 0.6 1.2 0.6 1.52 0v0l5.8-14.68h0.72c0.48 0 0.84-0.36 0.84-0.84 0.080-0.48-0.28-0.84-0.76-0.84z"
+            ></path>
+          </svg>
+          Wikipedia Search
+        </div>
         <div class="text-indigo-700">
           <small> Search through millions of Wikipedia articles</small>
         </div>
@@ -10,4 +26,8 @@
       <app-typeahead-control />
     </div>
   </div>
+  <app-typeahead-selected
+    [ngStyle]="{ 'max-width.px': containerWidth() }"
+    class="relative mt-20"
+  />
 </div>
