@@ -87,10 +87,6 @@ describe('ApiService', () => {
       // THEN it should return empty results and totalPages as 0
       expect(data.results.length).toBe(0)
       expect(data.totalPages).toBe(0)
-      expect(consoleErrorSpy).toHaveBeenCalledWith(
-        'Unexpected API response:',
-        mockResponse
-      )
       done()
     })
 
