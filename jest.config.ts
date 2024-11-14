@@ -1,8 +1,8 @@
 export default {
-  displayName: 'ng-autocomplete-demo',
+  displayName: 'wikipedia-search',
   preset: './jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: './coverage/ng-autocomplete-demo',
+  coverageDirectory: './coverage/wikipedia-search',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

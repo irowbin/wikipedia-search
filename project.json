@@ -1,5 +1,5 @@
 {
-  "name": "ng-autocomplete-demo",
+  "name": "wikipedia-search",
   "$schema": "node_modules/nx/schemas/project-schema.json",
   "includedScripts": [],
   "projectType": "application",
@@ -11,7 +11,7 @@
       "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/ng-autocomplete-demo",
+        "outputPath": "dist/wikipedia-search",
         "index": "./src/index.html",
         "browser": "./src/main.ts",
         "polyfills": ["zone.js"],
@@ -54,10 +54,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "ng-autocomplete-demo:build:production"
+          "buildTarget": "wikipedia-search:build:production"
         },
         "development": {
-          "buildTarget": "ng-autocomplete-demo:build:development"
+          "buildTarget": "wikipedia-search:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -65,7 +65,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "ng-autocomplete-demo:build"
+        "buildTarget": "wikipedia-search:build"
       }
     },
     "lint": {
@@ -84,9 +84,9 @@
     "serve-static": {
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "ng-autocomplete-demo:build",
+        "buildTarget": "wikipedia-search:build",
         "port": 4200,
-        "staticFilePath": "dist/ng-autocomplete-demo/browser",
+        "staticFilePath": "dist/wikipedia-search/browser",
         "spa": true
       }
     }

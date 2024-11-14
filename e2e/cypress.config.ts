@@ -7,10 +7,10 @@ export default defineConfig({
     ...nxE2EPreset(__filename, {
       cypressDir: 'src',
       webServerCommands: {
-        default: 'npx nx run ng-autocomplete-demo:serve',
-        production: 'npx nx run ng-autocomplete-demo:serve-static',
+        default: 'npx nx run wikipedia-search:serve',
+        production: 'npx nx run wikipedia-search:serve-static',
       },
-      ciWebServerCommand: 'npx nx run ng-autocomplete-demo:serve-static',
+      ciWebServerCommand: 'npx nx run wikipedia-search:serve-static',
       ciBaseUrl: 'http://localhost:4200',
     }),
     baseUrl: 'http://localhost:4200',

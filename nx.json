@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "defaultBase": "master",
+  "defaultBase": "main",
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
@@ -79,5 +79,5 @@
       "style": "css"
     }
   },
-  "defaultProject": "ng-autocomplete-demo"
+  "defaultProject": "wikipedia-search"
 }
