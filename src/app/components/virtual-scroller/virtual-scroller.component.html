@@ -1,9 +1,0 @@
-<!-- custom-virtual-scroll.component.html -->
-<div #scrollContainer class="scroll-container" (scroll)="onScroll()">
-  <div class="spacer" [style.height.px]="totalHeight"></div>
-  <div class="items" [style.transform]="getTransform()">
-    <div *ngFor="let item of visibleItems" class="item">
-      {{ item }}
-    </div>
-  </div>
-</div>
