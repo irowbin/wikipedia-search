@@ -2,14 +2,85 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Wikipedia Search</title>
+    <title>Wikipedia Search - Find Wikipedia Articles Easily</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Use our powerful Wikipedia Search tool to find Wikipedia articles quickly and easily. Access a wealth of knowledge and information from the world's largest encyclopedia."
+    />
+    <meta
+      name="keywords"
+      content="Wikipedia, Wikipedia Search, Search Wikipedia, Wikipedia Articles, Encyclopedia, Knowledge, Information"
+    />
+    <meta name="author" content="Your Name or Company Name" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://wikipedia-content-search.vercel.app/" />
+
+    <!-- Open Graph Meta Tags (For Social Media Sharing) -->
+    <meta
+      property="og:title"
+      content="Wikipedia Search - Find Wikipedia Articles Easily"
+    />
+    <meta
+      property="og:description"
+      content="Use our powerful Wikipedia Search tool to find Wikipedia articles quickly and easily."
+    />
+    <meta
+      property="og:image"
+      content="https://wikipedia-content-search.vercel.app/assets/images/og-image.jpg"
+    />
+    <meta
+      property="og:url"
+      content="https://wikipedia-content-search.vercel.app/"
+    />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Wikipedia Search - Find Wikipedia Articles Easily"
+    />
+    <meta
+      name="twitter:description"
+      content="Use our powerful Wikipedia Search tool to find Wikipedia articles quickly and easily."
+    />
+    <meta
+      name="twitter:image"
+      content="https://wikipedia-content-search.vercel.app/assets/images/twitter-image.jpg"
+    />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'><circle cx='16' cy='16' r='16' fill='%23f8fafc'/><path d='M19.5 18h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L19.5 18zm-6 0C11.01 18 9 15.99 9 13.5S11.01 9 13.5 9 18 11.01 18 13.5 15.99 18 13.5 18z' fill='%234f46e5'/><path d='M11 11l2 6 2-4 2 4 2-6' stroke='%234f46e5' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>"
+    />
+
+    <!-- Fonts and Stylesheets -->
     <link
       href="https://fonts.googleapis.com/css?family=Roboto"
       rel="stylesheet"
     />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'><circle cx='16' cy='16' r='16' fill='%23f8fafc'/><path d='M19.5 18h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L19.5 18zm-6 0C11.01 18 9 15.99 9 13.5S11.01 9 13.5 9 18 11.01 18 13.5 15.99 18 13.5 18z' fill='%234f46e5'/><path d='M11 11l2 6 2-4 2 4 2-6' stroke='%234f46e5' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Wikipedia Search",
+        "url": "https://wikipedia-content-search.vercel.app/",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://wikipedia-content-search.vercel.app/search?query={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
   </head>
   <body>
     <app-root></app-root>
