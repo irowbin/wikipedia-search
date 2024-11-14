@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { TypeaheadContainerComponent } from './typeahead-container.component'
+import { TypeaheadControlComponent } from './typeahead-control.component'
 import { provideMockStore } from '@ngrx/store/testing'
 
-describe('TypeaheadContainerComponent', () => {
-  let component: TypeaheadContainerComponent
-  let fixture: ComponentFixture<TypeaheadContainerComponent>
+describe('TypeaheadControlComponent', () => {
+  let component: TypeaheadControlComponent
+  let fixture: ComponentFixture<TypeaheadControlComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TypeaheadContainerComponent],
+      imports: [TypeaheadControlComponent],
       providers:[
         provideMockStore({})
       ]
     }).compileComponents()
 
-    fixture = TestBed.createComponent(TypeaheadContainerComponent)
+    fixture = TestBed.createComponent(TypeaheadControlComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

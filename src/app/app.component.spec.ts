@@ -1,27 +1,19 @@
 import { TestBed } from '@angular/core/testing'
 import { AppComponent } from './app.component'
-import { NxWelcomeComponent } from './nx-welcome.component'
-import { RouterModule } from '@angular/router'
+import { provideMockStore } from '@ngrx/store/testing'
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent, NxWelcomeComponent, RouterModule.forRoot([])],
+      imports: [AppComponent],
+      providers: [
+        provideMockStore({}),
+      ],
     }).compileComponents()
   })
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent)
-    fixture.detectChanges()
-    const compiled = fixture.nativeElement as HTMLElement
-    expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome ng-autocomplete-demo'
-    )
-  })
-
-  it(`should have as title 'ng-autocomplete-demo'`, () => {
+  it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent)
     const app = fixture.componentInstance
-    expect(app.title).toEqual('ng-autocomplete-demo')
+    expect(app).toBeTruthy()
   })
 })
