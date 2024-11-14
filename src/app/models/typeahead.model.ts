@@ -1,4 +1,5 @@
 export interface SearchResult {
+  sn: number
   title: string
   snippet: string
   pageid: number

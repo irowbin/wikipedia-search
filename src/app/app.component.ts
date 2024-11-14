@@ -1,9 +1,9 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core'
 import { RouterModule } from '@angular/router'
-import { TypeaheadComponent } from './components/typeahead/typeahead.component'
+import { TypeaheadControlComponent } from './components/typeahead-control/typeahead-control.component'
 import { CommonModule } from '@angular/common'
-import { UserManualComponent } from './components/user-manual/user-manual.component'
-import { SelectedTypeaheadComponent } from './components/selected-typeahead/selected-typeahead.component'
+import { TypeaheadUserManualComponent } from './components/typeahead-user-manual/typeahead-user-manual.component'
+import { TypeaheadSelectedComponent } from './components/typeahead-selected/typeahead-selected.component'
 import { TypeaheadContainerComponent } from './components/typeahead-container/typeahead-container.component'
 import { Subject, takeUntil } from 'rxjs'
 import { SearchResult } from './models/typeahead.model'
@@ -14,9 +14,9 @@ import { TypeaheadStateFacade } from './+state/typeahead-state.facade'
   imports: [
     RouterModule,
     CommonModule,
-    TypeaheadComponent,
-    UserManualComponent,
-    SelectedTypeaheadComponent,
+    TypeaheadControlComponent,
+    TypeaheadUserManualComponent,
+    TypeaheadSelectedComponent,
     TypeaheadContainerComponent,
   ],
   selector: 'app-root',
@@ -24,9 +24,14 @@ import { TypeaheadStateFacade } from './+state/typeahead-state.facade'
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnDestroy, OnInit {
-  public readonly toDestroy$ = new Subject<void>()
+  /** Manages subscriptions when the component is destroyed */
+  private readonly toDestroy$ = new Subject<void>()
+
+  /** Selected typeahead object signal with undefined initially */
   public readonly selectedTypeahead = signal<SearchResult>(undefined)
-  public readonly typeaheadFacade = inject(TypeaheadStateFacade)
+
+  /** Injects the TypeaheadStateFacade for state management */
+  private readonly typeaheadFacade = inject(TypeaheadStateFacade)
 
   public ngOnInit(): void {
     this.#selectSelectedTypeahead()
@@ -37,6 +42,10 @@ export class AppComponent implements OnDestroy, OnInit {
     this.toDestroy$.complete()
   }
 
+  /**
+   * Selects the selected typeahead from the state.
+   * @returns {void}
+   */
   #selectSelectedTypeahead(): void {
     this.typeaheadFacade.selectSelectedTypeahead$
       .pipe(takeUntil(this.toDestroy$))

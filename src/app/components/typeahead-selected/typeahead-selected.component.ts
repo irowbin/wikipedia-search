@@ -5,16 +5,21 @@ import { Subject, takeUntil } from 'rxjs'
 import { SearchResult } from '../../models/typeahead.model'
 
 @Component({
-  selector: 'app-selected-typeahead',
+  selector: 'app-typeahead-selected',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './selected-typeahead.component.html',
-  styleUrl: './selected-typeahead.component.scss',
+  templateUrl: './typeahead-selected.component.html',
+  styleUrl: './typeahead-selected.component.scss',
 })
-export class SelectedTypeaheadComponent implements OnDestroy, OnInit {
-  public readonly toDestroy$ = new Subject<void>()
+export class TypeaheadSelectedComponent implements OnDestroy, OnInit {
+  /** Manages subscriptions when the component is destroyed */
+  private readonly toDestroy$ = new Subject<void>()
+
+  /** Injects the TypeaheadStateFacade for state management */
+  private readonly typeaheadFacade = inject(TypeaheadStateFacade)
+
+  /** Selected typeahead object signal with undefined initially */
   public readonly selectedTypeahead = signal<SearchResult>(undefined)
-  public readonly typeaheadFacade = inject(TypeaheadStateFacade)
 
   public ngOnInit(): void {
     this.#selectSelectedTypeahead()
@@ -25,6 +30,10 @@ export class SelectedTypeaheadComponent implements OnDestroy, OnInit {
     this.toDestroy$.complete()
   }
 
+  /**
+   * Selects the selected typeahead from the state.
+   * @returns {void}
+   */
   #selectSelectedTypeahead(): void {
     this.typeaheadFacade.selectSelectedTypeahead$
       .pipe(takeUntil(this.toDestroy$))

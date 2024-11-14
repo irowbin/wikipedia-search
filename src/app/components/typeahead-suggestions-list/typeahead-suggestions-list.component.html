@@ -1,4 +1,5 @@
 <div
+  #scrollerContainer
   class="rounded-md drop-shadow-lg bg-white absolute left-0 right-0 mt-3 p-3 overflow-auto"
   [style.height.px]="viewportHeight"
   (scroll)="onScroll($event)"
@@ -9,7 +10,7 @@
       [style.transform]="getTransform()"
     >
       @for(item of displayedItems(); track item.pageid; let first = $first; let
-      last = $last; let index = $index){
+      last = $last; let index = $index;){
       <div class="h-[120px]" [id]="item.pageid">
         <li
           [id]="item.pageid"
@@ -25,6 +26,7 @@
         >
           <div class="col-12">
             <h3 class="text-gray-900 font-medium text-md mb-2">
+              <span class="text-gray-400">#{{ item.sn }} </span>
               <a
                 [title]="item.title"
                 role="link"
@@ -32,15 +34,15 @@
                 [href]="'https://en.wikipedia.org/?curid=' + item.pageid"
                 target="_blank"
                 [innerHTML]="
-                  (item.title.length > 50
-                    ? (item.title | slice : 0 : 50).trim() + '...'
-                    : item.title
-                  ) | highlight : searchTerm : 'bg-amber-100 font-bold'
+                  getTruncatedTitle(item.title)
+                    | highlight : searchTerm : 'bg-amber-100 font-bold'
                 "
               ></a>
             </h3>
             <div
-              [innerHTML]="item.snippet | highlight : searchTerm : 'bg-amber-100 font-bold'"
+              [innerHTML]="
+                item.snippet | highlight : searchTerm : 'bg-amber-100 font-bold'
+              "
               class="text-gray-600 mt-1 font-regular text-sm"
             ></div>
           </div>
@@ -48,8 +50,13 @@
       </div>
       }
       <!-- Sentinel element to detect when the user reaches the bottom -->
-      <div class="sentinel h-1"></div>
+      <div #sentinel class="h-1"></div>
     </div>
   </ul>
+  <div
+    class="flex grow h-3 text-indigo-700 px-3 mb-3 relative"
+    *ngIf="isBatchLoading()"
+  >
+    Loading more...
+  </div>
 </div>
-<!--<div class="loading-more" *ngIf="isBatchLoading()">Loading more...</div>-->
