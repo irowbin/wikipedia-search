@@ -9,9 +9,7 @@ describe('TypeaheadContainerComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TypeaheadContainerComponent],
-      providers:[
-        provideMockStore({})
-      ]
+      providers: [provideMockStore({})],
     }).compileComponents()
 
     fixture = TestBed.createComponent(TypeaheadContainerComponent)

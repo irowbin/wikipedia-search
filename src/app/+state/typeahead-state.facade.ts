@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core'
 import { Store } from '@ngrx/store'
 import * as TypeaheadSelectors from './typeahead-state.selectors'
 import * as TypeaheadActions from './typeahead-state.actions'
-import { SearchResult } from '../models/typeahead.model'
+import { SearchResult } from '@/models/typeahead.model'
 import { TypeaheadStateKeys } from './typeahead-state.models'
 
 @Injectable({ providedIn: 'root' })
@@ -29,8 +29,9 @@ export class TypeaheadStateFacade {
     TypeaheadSelectors.selectSelectedTypeahead
   )
 
-  public selectIsLoadingNextPage$ =    this.store.select(TypeaheadSelectors.selectIsLoadingNextPage)
-
+  public selectIsLoadingNextPage$ = this.store.select(
+    TypeaheadSelectors.selectIsLoadingNextPage
+  )
 
   public resetTypeaheadState(stateKey: TypeaheadStateKeys): void {
     this.store.dispatch(TypeaheadActions.resetTypeaheadState({ stateKey }))
@@ -43,7 +44,6 @@ export class TypeaheadStateFacade {
   public fetchNextPage(query: string, page: number): void {
     this.store.dispatch(TypeaheadActions.fetchNextPage({ query, page }))
   }
-
 
   public toggleSearchLoadingState(isSearchLoading: boolean): void {
     this.store.dispatch(TypeaheadActions.toggleLoading({ isSearchLoading }))

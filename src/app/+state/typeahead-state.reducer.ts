@@ -1,8 +1,8 @@
 import { Action, createReducer, on } from '@ngrx/store'
 import * as TypeaheadActions from './typeahead-state.actions'
-import { resetStateProperty } from '../utils/state-reset-utility'
+import { resetStateProperty } from '@/utils/state-reset-utility'
 import { TypeaheadState } from './typeahead-state.models'
-import { SearchResult } from '../models/typeahead.model'
+import { SearchResult } from '@/models/typeahead.model'
 
 /** Name of the feature */
 export const TYPEAHEAD_STATE_FEATURE_KEY = 'typeaheadState'
@@ -38,18 +38,21 @@ const reducer = createReducer(
     isSearchLoading: true,
     error: null,
   })),
-  on(TypeaheadActions.searchSuccess, (state, { query, results, page, totalPages }) => ({
-    ...state,
-    isSearchLoading: false,
-    queries: {
-      ...state.queries,
-      [query]: getResultsWithSN([], results),
-    },
-    queryPageInfo: {
-      ...state.queryPageInfo,
-      [query]: { currentPage: page, totalPages },
-    },
-  })),
+  on(
+    TypeaheadActions.searchSuccess,
+    (state, { query, results, page, totalPages }) => ({
+      ...state,
+      isSearchLoading: false,
+      queries: {
+        ...state.queries,
+        [query]: getResultsWithSN([], results),
+      },
+      queryPageInfo: {
+        ...state.queryPageInfo,
+        [query]: { currentPage: page, totalPages },
+      },
+    })
+  ),
   on(TypeaheadActions.searchFailure, (state, { error }) => ({
     ...state,
     isSearchLoading: false,
@@ -67,21 +70,24 @@ const reducer = createReducer(
     ...state,
     isNextPageLoading: true,
   })),
-  on(TypeaheadActions.fetchNextPageSuccess, (state, { query, results, page, totalPages }) => ({
-    ...state,
-    isNextPageLoading: false,
-    queries: {
-      ...state.queries,
-      [query]: [
-        ...(state.queries[query] || []),
-        ...getResultsWithSN(state.queries[query] || [], results),
-      ],
-    },
-    queryPageInfo: {
-      ...state.queryPageInfo,
-      [query]: { currentPage: page, totalPages },
-    },
-  })),
+  on(
+    TypeaheadActions.fetchNextPageSuccess,
+    (state, { query, results, page, totalPages }) => ({
+      ...state,
+      isNextPageLoading: false,
+      queries: {
+        ...state.queries,
+        [query]: [
+          ...(state.queries[query] || []),
+          ...getResultsWithSN(state.queries[query] || [], results),
+        ],
+      },
+      queryPageInfo: {
+        ...state.queryPageInfo,
+        [query]: { currentPage: page, totalPages },
+      },
+    })
+  ),
   on(TypeaheadActions.fetchNextPageFailure, (state, { error }) => ({
     ...state,
     isNextPageLoading: false,

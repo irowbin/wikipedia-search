@@ -6,9 +6,7 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
-      providers: [
-        provideMockStore({}),
-      ],
+      providers: [provideMockStore({})],
     }).compileComponents()
   })
   it('should create the app', () => {

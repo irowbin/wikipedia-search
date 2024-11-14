@@ -1,8 +1,8 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { TypeaheadStateFacade } from '../../+state/typeahead-state.facade'
+import { TypeaheadStateFacade } from '@/+state/typeahead-state.facade'
 import { Subject, takeUntil } from 'rxjs'
-import { SearchResult } from '../../models/typeahead.model'
+import { SearchResult } from '@/models/typeahead.model'
 
 @Component({
   selector: 'app-typeahead-selected',

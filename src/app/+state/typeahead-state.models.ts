@@ -1,4 +1,4 @@
-import { SearchResult } from '../models/typeahead.model'
+import { SearchResult } from '@/models/typeahead.model'
 
 export type TypeaheadStateKeys =
   | keyof TypeaheadState

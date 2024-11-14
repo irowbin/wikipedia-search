@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store'
-import { SearchResult } from '../models/typeahead.model'
+import { SearchResult } from '@/models/typeahead.model'
 import { TypeaheadStateKeys } from './typeahead-state.models'
 
 export enum TypeaheadActionTypes {
@@ -25,7 +25,12 @@ export const search = createAction(
 
 export const searchSuccess = createAction(
   TypeaheadActionTypes.SEARCH_SUCCESS,
-  props<{ query: string; results: SearchResult[]; page: number; totalPages?: number }>()
+  props<{
+    query: string
+    results: SearchResult[]
+    page: number
+    totalPages?: number
+  }>()
 )
 
 export const searchFailure = createAction(
@@ -57,7 +62,12 @@ export const fetchNextPage = createAction(
 
 export const fetchNextPageSuccess = createAction(
   TypeaheadActionTypes.FETCH_NEXT_PAGE_SUCCESS,
-  props<{ query: string; results: SearchResult[]; page: number; totalPages?: number }>()
+  props<{
+    query: string
+    results: SearchResult[]
+    page: number
+    totalPages?: number
+  }>()
 )
 
 export const fetchNextPageFailure = createAction(

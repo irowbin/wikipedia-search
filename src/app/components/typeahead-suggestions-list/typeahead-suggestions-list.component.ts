@@ -14,11 +14,11 @@ import {
   ViewChild,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { SanitizePipe } from '../../pipes/dom-sanitizer.pipe'
+import { SanitizePipe } from '@/pipes/dom-sanitizer.pipe'
 import { filter, Subject, takeUntil } from 'rxjs'
-import { SearchResult } from '../../models/typeahead.model'
-import { TypeaheadStateFacade } from '../../+state/typeahead-state.facade'
-import { HighlightPipe } from '../../pipes/highlight.pipe'
+import { SearchResult } from '@/models/typeahead.model'
+import { TypeaheadStateFacade } from '@/+state/typeahead-state.facade'
+import { HighlightPipe } from '@/pipes/highlight.pipe'
 
 @Component({
   selector: 'app-typeahead-suggestions-list',

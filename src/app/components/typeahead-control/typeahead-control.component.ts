@@ -20,10 +20,10 @@ import {
   tap,
 } from 'rxjs'
 import { map, switchMap } from 'rxjs/operators'
-import { TypeaheadStateFacade } from '../../+state/typeahead-state.facade'
-import { SearchResult } from '../../models/typeahead.model'
+import { TypeaheadStateFacade } from '@/+state/typeahead-state.facade'
+import { SearchResult } from '@/models/typeahead.model'
 import { TypeaheadSuggestionsListComponent } from '../typeahead-suggestions-list/typeahead-suggestions-list.component'
-import { QueryPageInfo } from '../../+state/typeahead-state.models'
+import { QueryPageInfo } from '@/+state/typeahead-state.models'
 
 /**
  * TypeaheadControlComponent provides a typeahead-control search functionality with suggestions.

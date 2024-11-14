@@ -9,7 +9,7 @@ describe('TypeaheadSuggestionsListComponent', () => {
   // Must come before other beforeEach
   beforeEach(() => {
     // mock IntersectionObserver properly so jest can pass using mock
-    (global as any).IntersectionObserver = class IntersectionObserver {
+    ;(global as any).IntersectionObserver = class IntersectionObserver {
       observe() {
         return null
       }
@@ -22,17 +22,13 @@ describe('TypeaheadSuggestionsListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TypeaheadSuggestionsListComponent],
-      providers:[
-        provideMockStore({})
-      ]
+      providers: [provideMockStore({})],
     }).compileComponents()
 
     fixture = TestBed.createComponent(TypeaheadSuggestionsListComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
-
-
 
   it('should create', () => {
     expect(component).toBeTruthy()

@@ -9,9 +9,7 @@ describe('TypeaheadUserManualComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TypeaheadUserManualComponent],
-      providers:[
-        provideMockStore({})
-      ]
+      providers: [provideMockStore({})],
     }).compileComponents()
 
     fixture = TestBed.createComponent(TypeaheadUserManualComponent)

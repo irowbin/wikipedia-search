@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import * as TypeaheadActions from './typeahead-state.actions'
-import { ApiService } from '../services/api.service'
+import { ApiService } from '@/services/api.service'
 import { map, catchError } from 'rxjs/operators'
 import { of } from 'rxjs'
 import { fetch } from '@ngrx/router-store/data-persistence'
@@ -10,7 +10,6 @@ import { fetch } from '@ngrx/router-store/data-persistence'
 export class TypeaheadEffects {
   private readonly actions$ = inject(Actions)
   private readonly apiService = inject(ApiService)
-
 
   public search$ = createEffect(() =>
     this.actions$.pipe(
